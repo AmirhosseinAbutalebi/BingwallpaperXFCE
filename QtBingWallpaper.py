@@ -6,13 +6,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import QTimer,QDateTime, Qt
 import json, os
+import urllib.request
 from urllib.request import urlopen
 import os
 
 
 class Ui_MainWindow(object):
 
-    path = ""
+    path = os.getcwd()
     BingURL = 'https://www.bing.com'
     namePicture = ""
     link = ""
@@ -88,6 +89,16 @@ class Ui_MainWindow(object):
         self.labelExistFile.setText(_translate("MainWindow", "Press Check Till Check File Exist Or Not."))
         self.ExistButton.setText(_translate("MainWindow", "Check"))
  
+    def msg(self, message):
+        icon = QtGui.QIcon('BingWallpaper.png')
+        msg = QMessageBox()
+        msg.setWindowIcon(icon)
+        msg.setWindowTitle("BingWallpaper")
+        msg.setText(message)
+        msg.setIcon(QMessageBox.Warning)
+        msg.setStandardButtons(QMessageBox.Ok)
+        e = msg.exec_()
+
     def useDialog(self):
         self.path = QFileDialog.getExistingDirectory()
         if self.path:
@@ -101,24 +112,31 @@ class Ui_MainWindow(object):
     def checkFileExist(self):
         self.finalPath = self.path + "/" + self.namePicture
         if os.path.exists(self.finalPath):
-            self.labelExistFile.setText("File Has Exist And Replace That.")
+            self.labelExistFile.setText("File Has Exist And Replace That If Downlaod It.")
         else:
             self.labelExistFile.setText("Click Download Button And Wait For Downlaod")
 
     def getInfoPage(self):
-        URL = 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-Us'
-        pageData = json.loads(urlopen(URL).read().decode("utf-8"))
+        try:
+            URL = 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-Us'
+            pageData = json.loads(urlopen(URL).read().decode("utf-8"))
 
-        imageDate = pageData['images']
-        self.link = imageDate[0]['url']
-        name = imageDate[0]['copyright'].split(" (")[0]
-        name = name.replace(" ", "\ ")
-        name = name + ".jpg"
-        self.namePicture = name
-        self.checkFileExist()
+            imageDate = pageData['images']
+            self.link = imageDate[0]['url']
+            name = imageDate[0]['copyright'].split(" (")[0]
+            name = name + ".jpg"
+            self.namePicture = name
+            self.checkFileExist()
+        except:
+            self.msg("Can't Get Information Of Bing Please Try Again...")
 
     def DownloadBingWallpaper(self):
-        os.system('wget -O '+ self.finalPath+ " " + self.BingURL + self.link)
+        try:
+            urllib.request.urlretrieve(self.BingURL + self.link, self.finalPath) 
+            os.system('notify-send --app-name=APP_NAME: "Bingwallpaper" --icon="$PWD/bing.ico" "Download Finished."')
+
+        except:
+            self.msg("Can't Downlaod Bing Wallpaper...")
 
 
 if __name__ == "__main__":
