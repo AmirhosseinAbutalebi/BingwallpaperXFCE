@@ -5,6 +5,7 @@ This program just work in linux Xubuntu and write for xfce beacuse kde and gnome
 in this program use pyqt5 for ui and json, urllib for download image  and use os, sys for system
 command.<br>
 you can use command untill install require package or use install.sh.<br>
+this command just run for ubuntu base and if you have another os need change command.
 ## Way(1):
 use install.sh :
 ```
@@ -22,6 +23,8 @@ sudo apt install python3-pip
 pip install requests
 pip install urllib3
 sudo apt install python3-pyqt5
+sudo apt install notify-osd
+sudo apt install libnotify-bin
 ```
 # Final
 you can use bingwallpaperterminal for cron and anacron till downlaod bing wallpaper auto.<br>
