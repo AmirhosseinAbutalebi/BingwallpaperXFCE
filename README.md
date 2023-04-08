@@ -28,5 +28,5 @@ sudo apt install libnotify-bin
 ```
 # Final
 you can use bingwallpaperterminal for cron and anacron till downlaod bing wallpaper auto.<br>
-you can use qtbingwallpaper same anothe program in kde and gonme.<br>
+you can use qtbingwallpaper same anothe program in kde and gnome.<br>
 enjoy it (;
