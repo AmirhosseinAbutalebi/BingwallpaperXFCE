@@ -26,7 +26,7 @@ sudo apt install python3-pyqt5
 sudo apt install notify-osd
 sudo apt install libnotify-bin
 ```
-# Final
+# Finally
 you can use bingwallpaperterminal for cron and anacron till downlaod bing wallpaper auto.<br>
 you can use qtbingwallpaper same anothe program in kde and gnome.<br>
 enjoy it (;
